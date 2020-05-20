@@ -11,8 +11,21 @@
 #include <sstream>
 #include <string>
 
-namespace {
+// IMPORT PURE C SQLITE3 LIBRARY
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
+// C header here
+#include <sqlite3.h>
+
+#ifdef __cplusplus
+}
+#endif
+
+
+namespace {
 
     using flutter::EncodableList;
     using flutter::EncodableMap;
@@ -82,6 +95,11 @@ namespace {
     const char SqfliteParamErrorMessage[] = "message";
     const char SqfliteParamErrorData[] = "data";
     
+
+    namespace SqfliteDatabase {
+        // TODO ("Implement properties to hold database object and its transcation status")
+    }
+
     class SqflitePlugin : public flutter::Plugin {
     public:
         static void RegisterWithRegistrar(flutter::PluginRegistrarWindows* registrar);
