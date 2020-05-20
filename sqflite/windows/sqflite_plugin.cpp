@@ -18,14 +18,70 @@ namespace {
     using flutter::EncodableMap;
     using flutter::EncodableValue;
 
-    const char kChannelName[] = "com.tekartik.sqflite";
-    const char kInMemoryPath[] = ":memory:";
+    static const char kChannelName[] = "com.tekartik.sqflite";
+    static const char kInMemoryPath[] = ":memory:";
 
     // methods currently upstream SQFLite implemented
-    const char kMethodGetPlatformVersion[] = "getPlatformVersion";
-    const char kMethodGetDatabasePath[] = "getDatabasePath";
-    const char kMethodDebugMode[] = "debugMode";
+    static const char kMethodGetPlatformVersion[] = "getPlatformVersion";
+    static const char kMethodGetDatabasePath[] = "getDatabasePath";
+    static const char kMethodDebugMode[] = "debugMode";
+    static const char kMethodDebug[] = "debug";
+    static const char kMethodOptions[] = "options";
 
+    static const char kMethodOpenDatabase[] = "openDatabase";
+    static const char kMethodCloseDatabase[] =  "closeDatabase";
+    static const char kMethodDeleteDatabase[] = "deleteDatabase";
+    static const char kMethodExecute[] = "execute";
+    static const char kMethodInsert[] = "insert";
+    static const char kMethodUpdate[] = "update";
+    static const char kMethodQuery[] = "query";
+    static const char kMethodBatch[] = "batch";
+
+    // For open]
+    static const char kParamReadOnly[] = "readOnly";
+    static const char kParamSingleInstance[] ="singleInstance";
+    // Open result
+    static const char kParamRecovered[] = "recovered";
+    static const char kParamRecoveredInTranscation[] = "recoveredInTranscation";
+
+    // For batch
+    static const char kParamOperations[] = "operations";
+    // For each batch operation
+    static const char kParamPath[] = "path";
+    static const char kParamId[] ="id";
+    static const char kParamTable[]  = "table";
+    static const char kParamValues[] = "values";
+    
+    static const char kSqliteErrorCode[] = "sqlite_error";
+    static const char kErrorBadParam[] = "bad_param";      // internal only
+    static const char kErrorOpenFailed[] = "open_failed";
+    static const char kErrorDatabaseClosed[] = "database_closed";
+
+    // Options
+    static const char kParamQueryAsMapList[] = "queryAsMapList";
+
+    // Debug
+    static const char kParamDatabases[] = "databases";
+    static const char kParamLogLevel[] = "loglevel";
+    static const char kParamCmd[] = "cmd";
+    static const char kParamCmdGet[] = "get";
+
+    // Shared
+    char SqfliteParamSql[] = "sql";
+    char SqfliteParamSqlArguments[] = "arguments";
+    char SqfliteParamInTransaction[] = "inTransaction";
+    char SqfliteParamNoResult[] = "noResult";
+    char SqfliteParamContinueOnError[] = "continueOnError";
+    char SqfliteParamMethod[] = "method";
+    
+
+    // batch has either result or error
+    const char SqfliteParamResult[] = "result";
+    const char SqfliteParamError[] = "error";
+    const char SqfliteParamErrorCode[] = "code";
+    const char SqfliteParamErrorMessage[] = "message";
+    const char SqfliteParamErrorData[] = "data";
+    
     class SqflitePlugin : public flutter::Plugin {
     public:
         static void RegisterWithRegistrar(flutter::PluginRegistrarWindows* registrar);
@@ -43,7 +99,7 @@ namespace {
 
         // The registrar for this plugin, for accessing the window.
         flutter::PluginRegistrarWindows* registrar_;
-    }
+    };
 
     // real static registrar
     void SqflitePlugin::RegisterWithRegistrar(
@@ -60,9 +116,9 @@ namespace {
                 });
         
         registrar->AddPlugin(std::move(plugin));
-    }
+    };
 
-    SqflitePlugin::~SqflitePlugin(flutter::PluginRegistrarWindows *registrar)
+    SqflitePlugin::SqflitePlugin(flutter::PluginRegistrarWindows *registrar) 
     : registrar_(registrar) {}
 
     
