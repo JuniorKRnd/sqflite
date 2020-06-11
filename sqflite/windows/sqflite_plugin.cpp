@@ -18,7 +18,7 @@ extern "C"
 #endif
 
 // C header here
-#include <sqlite3.h>
+#include "sqlite3.h"
 
 #ifdef __cplusplus
 }
