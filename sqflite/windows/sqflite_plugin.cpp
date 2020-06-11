@@ -2,7 +2,7 @@
 
 
 #include <flutter/method_channel.h>
-#include <flutter/plugin_registrar_windows.h>                   // ref here https://engine.chinmaygarde.com/flutter__plugin__registrar_8h.html
+#include <flutter/plugin_registrar_windows.h>
 #include <flutter/standard_method_codec.h>
 #include <windows.h>
 
@@ -66,7 +66,7 @@ namespace {
     static const char kParamValues[] = "values";
     
     static const char kSqliteErrorCode[] = "sqlite_error";
-    static const char kErrorBadParam[] = "bad_param";      // internal only
+    static const char kErrorBadParam[] = "bad_param";
     static const char kErrorOpenFailed[] = "open_failed";
     static const char kErrorDatabaseClosed[] = "database_closed";
 
@@ -98,6 +98,7 @@ namespace {
 
     namespace SqfliteDatabase {
         // TODO ("Implement properties to hold database object and its transcation status")
+        
     }
 
     class SqflitePlugin : public flutter::Plugin {
